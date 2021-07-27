@@ -1,0 +1,2 @@
+1. code ----website ko permission chahiye mic or camera use krne k liye or jab permission aagyi to use krne k liye
+ye sara code BOM k andar aata hai (BOM --- functionality jo browser deta hai taki ek website hardware/OS functionality use kar paye) 

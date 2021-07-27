@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <video controls loop autoplay></video>
+    <button id = "button">Record</button>
+    <script>
+
+        let videoPlayer = document.querySelector("video");
+        let mediaRecorder;
+        let btn = document.querySelector("#button");
+        let chunks = [];    //parts of video
+        let isRecording = false;
+
+
+        btn.addEventListener("click",function(e){
+            
+            if(isRecording){
+                mediaRecorder.stop();   
+                isRecording=false;
+            }else{
+                mediaRecorder.start();
+                isRecording=true;
+            }
+        });
+
+        // for permission
+        //mediaDevides is a object which has a inbuilt function getUserMedia
+        let promiseToUseCamera = navigator.mediaDevices.getUserMedia({
+            video: true, audio: true
+        });
+
+        promiseToUseCamera.then(function (mediaStream) {                //mediaStream me camra or mic ka inout aa rha h
+            //  console.log("Access given");
+
+            //mediaStream ek object hai jisme camera or mic ka input aa rha hai fir vo maine as object (src) me daal dia
+            videoPlayer.srcObject = mediaStream;
+
+            mediaRecorder = new MediaRecorder(mediaStream);
+            mediaRecorder.addEventListener("dataavailable", function (e) {
+                chunks.push(e.data);        
+            })
+            mediaRecorder.addEventListener("stop", function (e) {
+                //Blob is a large file in web
+                let blob = new Blob(chunks, { type: "videp/mp4" });
+                chunks=[];
+
+
+                let link = URL.createObjectURL(blob);               //blob ne kisi tarah se link bana ke dedi video ki
+                let a = document.createElement("a");
+                a.href = link;
+                a.download = "video.mp4";
+                a.click();
+            })
+
+        }).catch(function () {
+            //  console.log("Access denied");
+
+
+        })
+    </script>
+
+</body>
+
+</html>
