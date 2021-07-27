@@ -29,14 +29,49 @@
 
         let tool = canvas.getContext("2d");
 
-        tool.moveTo(0,0);
-        tool.lineTo(300,250);
-        tool.lineTo(500,567);
+        let isDrawing = false;
 
-        tool.strokeStyle="pink";
-        tool.lineWidth = 10;
+        window.addEventListener("mousedown",function(e){
+            tool.moveTo(e.clientX,e.clientY);
+            isDrawing=true;
+        });
 
-        tool.stroke();
+        window.addEventListener("mouseup",function(e){
+            isDrawing=false;
+        });
+
+        window.addEventListener("mousemove",function(e){
+            if(isDrawing){
+                tool.lineTo(e.clientX,e.clientY);
+                tool.stroke();
+            }
+        });
+
+        
+
+        
+
+
+    //     tool.moveTo(0,0);
+    //     tool.lineTo(300,250);
+       
+
+    //     tool.strokeStyle="pink";
+    //     tool.lineWidth = 40;
+
+    //     tool.stroke();
+
+    //     tool.beginPath();
+
+    //    tool.moveTo(300,650)
+    //     tool.lineTo(700,345);
+
+    //     tool.strokeStyle="blue";
+    //     tool.lineWidth = 10;
+
+    //     tool.stroke();
+
+
     </script>
 </body>
 </html>
